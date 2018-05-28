@@ -182,8 +182,140 @@
         <div class="footer-logo"></div>
       </div>
     </footer>
+    <div id="event-modal" class="event-modal">
+      <div class="flex">
+        <video src="" autoplay muted></video>
+        <div class="event-details">
+          <div class="event-type"></div>
+          <div class="event-title"></div>
+          <div class="event-metadata">
+            <p class="event-meta event-date"><strong>Etkinlik Tarihi: <span></span></strong></p>
+            <p class="event-meta event-time"><strong>Etkinlik Saait: <span></span></strong></p>
+            <p class="event-meta event-location"><strong>Etkinlik Yeri: <span></span></strong></p>
+          </div>
+          <div class="event-content">
+            <div class="event-content-headline"></div>
+            <div class="event-content-body"></div>
+            <div class="event-content-guests"></div>
+          </div>
+        </div>
+      </div>
+      <div class="event-modal-close">
+        <a href="javascript:void">&times;</a>
+      </div>
+    </div>
     <script type="text/javascript">
-      document.querySelectorAll('a').forEach(function (link) {
+      var EVENT_IDS = {
+        tanisma: 0,
+        akira: 1,
+        'robot-yapimi': 2,
+        smartwatch: 3,
+        cyberpunk: 4,
+        blockchain: 5,
+        vr: 6,
+        kusanagi: 7
+      };
+
+      var EVENT_LIST = [
+        {
+          animSrc: '/assets/animations/tanisma.mp4',
+          type: 'ASOSYAL PERSEMBE',
+          title: 'TANIŞMA',
+          color: '#EEC04B',
+          date: '17.05.2018',
+          time: '18:30',
+          location: 'Hackerspace Istanbul',
+          body: '<buraya icerik gelecek>',
+          headline: '<buraya headline gelecek>',
+          guests: ['Bir Katilimci', 'Baska Bir Katilimci']
+        },
+        {
+          animSrc: '/assets/animations/akira.mp4',
+          type: 'FİLM GECESİ',
+          title: 'AKIRA',
+          color: '#CE504A',
+          date: '02.05.2018',
+          time: '13:30',
+          location: 'Hackerspace Istanbul',
+          body: '<buraya icerik gelecek>',
+          headline: '<buraya headline gelecek>',
+          guests: ['Bir Katilimci', 'Baska Bir Katilimci']
+        },
+        {
+          animSrc: '/assets/animations/robot-yapimi.mp4',
+          type: 'WORKSHOP',
+          title: 'ROBOT YAPIMI',
+          color: '#E61189',
+          date: '11.05.2018',
+          time: '13:30',
+          location: 'Hackerspace Istanbul',
+          body: '<buraya icerik gelecek>',
+          headline: '<buraya headline gelecek>',
+          guests: ['Bir Katilimci', 'Baska Bir Katilimci']
+        },
+        {
+          animSrc: '/assets/animations/smartwatch.mp4',
+          color: '#69A5CB',
+          type: 'WORKSHOP',
+          title: 'SMARTWATCH YAPIMI',
+          date: '28.05.2018',
+          time: '13:30',
+          location: 'Hackerspace Istanbul',
+          body: '<buraya icerik gelecek>',
+          headline: '<buraya headline gelecek>',
+          guests: ['Bir Katilimci', 'Baska Bir Katilimci']
+        },
+        {
+          animSrc: '/assets/animations/cyberpunk.mp4',
+          color: '#6B4583',
+          type: 'SÖYLEŞİ',
+          title: 'CYBERPUNK NEDİR',
+          date: '21.05.2018',
+          time: '16:00',
+          location: 'Hackerspace Istanbul',
+          body: '<buraya icerik gelecek>',
+          headline: '<buraya headline gelecek>',
+          guests: ['Bir Katilimci', 'Baska Bir Katilimci']
+        },
+        {
+          animSrc: '/assets/animations/blockchain.mp4',
+          color: '#CD5237',
+          type: 'SÖYLEŞİ',
+          title: 'BLOCKCHAIN NEDİR',
+          date: '16.05.2018',
+          time: '16:00',
+          location: 'Hackerspace Istanbul',
+          body: '<buraya icerik gelecek>',
+          headline: '<buraya headline gelecek>',
+          guests: ['Bir Katilimci', 'Baska Bir Katilimci']
+        },
+        {
+          animSrc: '/assets/animations/vr.mp4',
+          color: '#66AB52',
+          type: 'WORKSHOP',
+          title: 'VR ATÖLYESİ',
+          date: '13.05.2018',
+          time: '13:30',
+          location: 'Hackerspace Istanbul',
+          body: '<buraya icerik gelecek>',
+          headline: '<buraya headline gelecek>',
+          guests: ['Bir Katilimci', 'Baska Bir Katilimci']
+        },
+        {
+          animSrc: '/assets/animations/kusanagi.mp4',
+          color: '#2FC2A0',
+          type: 'FİLM GECESİ',
+          title: 'GHOST IN THE SHELL',
+          date: '22.05.2018',
+          time: '13:30',
+          location: 'Hackerspace Istanbul',
+          body: '<buraya icerik gelecek>',
+          headline: '<buraya headline gelecek>',
+          guests: ['Bir Katilimci', 'Baska Bir Katilimci']
+        },
+      ];
+
+      document.querySelectorAll('nav a').forEach(function (link) {
         link.addEventListener('click', scrollToLink.bind(null, link.getAttribute('href')));
       });
 
@@ -197,12 +329,12 @@
         var elRect = el.getBoundingClientRect();
         var bodyRect = document.body.getBoundingClientRect();
 
-        scrollAnimCanceler = animate(window.scrollY, elRect.top - bodyRect.top, 300, function (scroll) {
+        scrollAnimCanceler = animate(window.scrollY, elRect.top - bodyRect.top, 1, 300, function (scroll) {
           window.scroll(window.scrollX, scroll);
         });
       }
 
-      function animate(from, to, dur, cb) {
+      function animate(from, to, step, dur, cb) {
         var delta = to - from;
         var start = (new Date()).getTime();
 
@@ -224,6 +356,82 @@
         reqID = window.requestAnimationFrame(tick);
         return canceler;
       }
+
+      document.querySelectorAll('.events-posters--poster').forEach(function (eventEl, eventIdx) {
+        eventEl.addEventListener('click', function () {
+          openEventModal(eventIdx);
+        });
+      });
+
+
+      var modalEl = document.getElementById('event-modal');
+      modalEl.querySelector('.event-modal-close').addEventListener('click', function () {
+        modalEl.style.transform = 'scale(0.3)';
+        modalEl.style.opacity = '0.0';
+        setTimeout(function () {
+          modalEl.style.display = 'none';
+        }, 500);
+      });
+
+      function eventModalSetMetadata(modalEl, color, field, value) {
+        var el = modalEl.querySelector('.event-meta.event-'+field);
+
+        el.querySelector('strong').style.background = color;
+        el.querySelector('span').textContent = value;
+      }
+      
+      function openEventModal(eventIdx) {
+        var event = EVENT_LIST[eventIdx];
+
+        var videoEl = modalEl.querySelector('video');
+        videoEl.setAttribute('src', event.animSrc);
+
+        modalEl.querySelector('.event-type').innerHTML = event.type;
+        modalEl.querySelector('.event-title').innerHTML = event.title;
+
+        eventModalSetMetadata(modalEl, event.color, 'date', event.date);
+        eventModalSetMetadata(modalEl, event.color, 'time', event.time);
+        eventModalSetMetadata(modalEl, event.color, 'location', event.location);
+
+        modalEl.querySelector('.event-content-headline').textContent = event.headline;
+        modalEl.querySelector('.event-content-body').textContent = event.body;
+
+        var guestsEl = modalEl.querySelector('.event-content-guests');
+        guestsEl.innerHTML = '';
+
+        var strong = document.createElement('strong');
+        strong.textContent = 'Katılımcılar:';
+        guestsEl.appendChild(strong);
+        event.guests.forEach(function (guest) {
+          var guestEl = document.createElement('span');
+          guestEl.textContent = guest;
+          guestsEl.appendChild(guestEl);
+        });
+
+        modalEl.style.opacity = '0';
+        modalEl.style.transform = 'scale(0.3)';
+        modalEl.style.display = 'block';
+        setTimeout(function () {
+          modalEl.style.opacity = '1.0';
+          modalEl.style.transform = 'scale(1)';
+        }, 180);
+        setTimeout(function () {
+          //videoEl.play();
+        }, 600);
+      }
+
+      setTimeout(function () {
+        var pathname = document.location.pathname;
+        if (pathname.indexOf('/etkinlikler') === 0) {
+          var eventName = pathname.replace('/etkinlikler/', '');
+          if (eventName.length > 0) {
+            scrollToLink('#etkinlikler');
+            setTimeout(function () {
+              openEventModal(EVENT_IDS[eventName]);
+            }, 500);
+          }
+        }
+      }, 1000);
     </script>
   </body>
 </html>

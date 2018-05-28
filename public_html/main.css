@@ -190,6 +190,7 @@ section.events .container {
 }
 
 .events-posters--poster {
+  cursor: pointer;
   width: 340px;
   margin-bottom: 20px;
   margin-right: 20px;
@@ -387,4 +388,95 @@ footer {
   width: 108px;
   height: 136px;
   background: -webkit-image-set( url("/assets/footer_logo.png") 1x, url("/assets/footer_logo@2x.png") 2x) no-repeat;
+}
+
+/* EVENT MODAL ======================================================= */
+.event-modal {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: #000;
+  color: #fff;
+  z-index: 100000;
+  transition: opacity 0.5s, transform 0.3s;
+}
+
+.event-modal .flex {
+  display: flex;
+  height: 100%;
+}
+
+.event-modal video {
+  max-height: 100%;
+  max-width: 100%;
+  flex-grow: 0;
+  flex-shrink: 1;
+}
+
+.event-details {
+  padding: 25px 48px;
+  max-width: 700px;
+}
+
+.event-modal .event-type {
+  font-family: 'San Francisco Text', Helvetica, Arial;
+  font-size: 16px;
+  font-weight: 400;
+}
+
+.event-modal .event-title {
+  margin-top: 10px;
+  font-family: 'Bender-Black', Helvetica, Arial;
+  font-size: 64px;
+  line-height: 58px;
+}
+
+.event-metadata {
+  margin-top: 70px;
+  font-size: 16px;
+}
+
+.event-meta strong {
+  font-family: 'Bender-Bold', Helvetica;
+  font-weight: normal;
+  padding: 6px 10px;
+}
+
+.event-meta span {
+  font-family: 'Bender', Helvetica;
+  font-weight: normal;
+}
+
+.event-content {
+  margin-top: 80px;
+  font-family: 'San Francisco Text', Helvetica;
+  font-size: 16px;
+}
+
+.event-content-headline {
+  font-weight: bold;
+}
+
+.event-content-body {
+  margin-top: 20px;
+}
+
+.event-content-guests {
+  margin-top: 80px;
+}
+
+.event-modal-close {
+  position: absolute;
+  top: 32px;
+  right: 48px;
+}
+
+.event-modal-close a {
+  font-family: 'Bender-Black', Helvetica;
+  font-size: 42px;
+  color: #fff;
+  text-decoration: none;
 }
