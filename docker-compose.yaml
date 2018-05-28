@@ -13,6 +13,7 @@ services:
       - traefik.frontend.rule=Host:hs.alternatecyborg.io,hs.alternatecyborg.com
       - traefik.port=80
     volumes:
+      - ./public_html/:/usr/share/nginx/html
       - ./conf.d/:/etc/nginx/conf.d/
     networks:
       proxy:
