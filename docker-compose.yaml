@@ -1,0 +1,18 @@
+version: '3'
+
+networks:
+  proxy:
+    external: true
+
+services:
+  web:
+    image: nginx:alpine
+    restart: always
+    labels:
+      - traefik.backend=alternatecyborg_hsist
+      - traefik.frontend.rule=Host:hs.alternatecyborg.io,hs.alternatecyborg.com
+      - traefik.port=80
+    volumes:
+      - ./conf.d/:/etc/nginx/conf.d/
+    networks:
+      proxy:
